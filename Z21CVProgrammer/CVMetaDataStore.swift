@@ -15,6 +15,7 @@ struct CVMeta: Identifiable, Hashable {
     let name: String
     let description: String
     let bitLabels: [Int: String]    // bit 0 is LSB
+    let readOnly: Bool
 }
 
 // MARK: - JSON DTOs (decoding layer)
@@ -28,6 +29,7 @@ private struct CVMetaDTO: Decodable {
     let name: String
     let description: String
     let bitLabels: [String: String]?
+    let readOnly: Bool?
 
     func toModel() -> CVMeta {
         let converted: [Int: String] = (bitLabels ?? [:]).reduce(into: [:]) { dict, pair in
@@ -40,7 +42,8 @@ private struct CVMetaDTO: Decodable {
             number: number,
             name: name,
             description: description,
-            bitLabels: converted
+            bitLabels: converted,
+            readOnly: readOnly ?? false
         )
     }
 }

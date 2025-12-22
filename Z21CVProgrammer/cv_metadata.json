@@ -3,12 +3,134 @@
         {
             "number": 1,
             "name": "Address",
-            "description": "Primary (short) locomotive address (typically 1–127)."
+            "description": "Short address (1-127)."
         },
         {
             "number": 2,
             "name": "Initial Speed",
-            "description": "Start voltage / Vstart (kick-start speed)."
+            "description": "Start voltage / Vstart"
+        },
+        {
+            "number": 3,
+            "name": "Acceleration Time",
+            "description": ""
+        },
+        {
+            "number": 4,
+            "name": "Deceleration Time",
+            "description": ""
+        },
+        {
+            "number": 5,
+            "name": "Maximum Speed",
+            "description": "Vmax (1-255)"
+        },
+        {
+            "number": 6,
+            "name": "Medium Speed",
+            "description": "Vmed (1-255). 1 means 1/3 of CV5 value."
+        },
+        {
+            "number": 7,
+            "name": "Firmware version",
+            "description": "Firmware version number.",
+            "readOnly": true
+        },
+        {
+            "number": 8,
+            "name": "Decoder Brand Identifier",
+            "description": "Number identifying the decoder brand.\nCommon brand id:\n36: RailConnect\t48: Hornby\t\t62: Tams Electronik\n99: Lenz\t\t101: Bachmann\t151: ESU\n155:Fleischmann\t161: Roco",
+            "readOnly": true
+        },
+        {
+            "number": 13,
+            "name": "Analog Mode for F1-F8",
+            "description": "CV 13 is a bitwise CV, where each bit allows you to control the function in analog mode.",
+            "bitLabels": {
+                "0": "F1",
+                "1": "F2",
+                "2": "F3",
+                "3": "F4",
+                "4": "F5",
+                "5": "F6",
+                "6": "F7",
+                "7": "F8"
+            }
+        },
+        {
+            "number": 14,
+            "name": "Analog Mode for F0, F9-F12",
+            "description": "CV 19 is a bitwise CV, where each bit allows you to control the function in analog mode.",
+            "bitLabels": {
+                "0": "F0 Fwd",
+                "1": "F0 Rev",
+                "2": "F9",
+                "3": "F10",
+                "4": "F11",
+                "5": "F12",
+                "6": "Reserved",
+                "7": "Reserved"
+            }
+        },
+        {
+            "number": 19,
+            "name": "MU Address",
+            "description": "This CV can be used to assign a second primary address to a locomotive for use in a consist, or \"MU\" arrangement"
+        },
+        {
+            "number": 21,
+            "name": "MU F1-F8",
+            "description": "CV 21 is a bitwise CV, where each bit allows you to control the function in multiple unit mode.",
+            "bitLabels": {
+                "0": "F1",
+                "1": "F2",
+                "2": "F3",
+                "3": "F4",
+                "4": "F5",
+                "5": "F6",
+                "6": "F7",
+                "7": "F8"
+            }
+        },
+        {
+            "number": 22,
+            "name": "MU F0, F9-F12",
+            "description": "CV 19 is a bitwise CV, where each bit allows you to control the function in multiple unit mode",
+            "bitLabels": {
+                "0": "F0 Fwd",
+                "1": "F0 Rev",
+                "2": "F9",
+                "3": "F10",
+                "4": "F11",
+                "5": "F12",
+                "6": "Reserved",
+                "7": "Reserved"
+            }
+        },
+        {
+            "number": 23,
+            "name": "Acceleration Time (MU only)",
+            "description": "This CV contains additional acceleration rate information that is to be added to or subtracted from the base value contained in CV3. Only usefull if CV19 is not 0"
+        },
+        {
+            "number": 24,
+            "name": "Deceleration Time (MU only)",
+            "description": "This CV contains additional deceleration rate information that is to be added to or subtracted from the base value contained in CV4. Only usefull if CV19 is not 0"
+        },
+        {
+            "number": 27,
+            "name": "ABC system",
+            "description": "This CV is used to configure ABC system will be used. Value might be different depending on the brand. Refer to the decoder documentation.",
+            "bitLabels": {
+                "0": "Right rail",
+                "1": "Left rail",
+                "2": "Reserved",
+                "3": "Reserved",
+                "4": "Reserved",
+                "5": "Reserved",
+                "6": "Reserved",
+                "7": "Reserved"
+            }
         },
         {
             "number": 29,

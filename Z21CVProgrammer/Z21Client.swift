@@ -119,7 +119,9 @@ final class Z21Client: ObservableObject {
         appendLog(line)
     }
 
-
+    func clearLog() {
+        logText = ""
+    }
 }
 
 enum Z21Event: Equatable {

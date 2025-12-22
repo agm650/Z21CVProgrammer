@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var locoAddress: UInt16 = 3
     @State private var cvNumber1Based: UInt16 = 1
     @State private var cvValue: UInt8 = 3
+    @State private var maxCvValue: UInt8 = 106
 
     // CV results stored by CV number (1-based for display)
     @State private var cvResults: [UInt16: UInt8] = [:]
@@ -89,7 +90,7 @@ struct ContentView: View {
                             }
 
                             VStack(alignment: .leading) {
-                                Text("CV (1–255)")
+                                Text("CV (1–\(maxCvValue))")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                                 TextField("", value: $cvNumber1Based, format: .number)
@@ -98,7 +99,7 @@ struct ContentView: View {
                                     .onChange(of: cvNumber1Based) {
                                         v in
                                         if v < 1 { cvNumber1Based = 1 }
-                                        if v > 255 { cvNumber1Based = 255 }
+                                        if v > maxCvValue { cvNumber1Based = UInt16(maxCvValue) }
                                     }
                                     .onChange(of: cvValue) { v in
                                         // UInt8 is already 0..255, so no clamp needed unless you use Int input.
@@ -112,12 +113,13 @@ struct ContentView: View {
                                 TextField("", value: $cvValue, format: .number)
                                     .textFieldStyle(.roundedBorder)
                                     .frame(width: 120)
+                                    .disabled(isCurrentReadOnly)
                             }
 
                             Spacer()
 
                             Button("Write CV") { writeCV() }
-                                .disabled(!client.isRunning)
+                                .disabled(!client.isRunning || isCurrentReadOnly)
 
                             Button("Read CV") { readCV(single: cvNumber1Based) }
                                 .disabled(!client.isRunning)
@@ -130,6 +132,13 @@ struct ContentView: View {
                                 Text(meta.description)
                                     .font(.footnote)
                                     .foregroundStyle(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .multilineTextAlignment(.leading)
+                                if isCurrentReadOnly {
+                                    Text("This CV is marked read-only and cannot be written.")
+                                        .font(.footnote).foregroundColor(.red)
+                                        .foregroundStyle(.secondary)
+                                }
                             }
                             .padding(.top, 6)
                         }
@@ -137,11 +146,13 @@ struct ContentView: View {
                             value: $cvValue,
                             bitLabels: currentMeta?.bitLabels ?? [:]
                         )
+                        .disabled(isCurrentReadOnly)
+                        .opacity(isCurrentReadOnly ? 0.6 : 1.0)
                         .padding(.top, 8)
                         Divider()
 
                         HStack {
-                            Button("Read CV 1–255") {
+                            Button("Read CV 1–\(maxCvValue)") {
                                 startReadRange()
                             }
                             .disabled(!client.isRunning || rangeTask != nil)
@@ -171,7 +182,7 @@ struct ContentView: View {
 
                             Spacer()
 
-                            Text("Read: \(cvResults.count)/255")
+                            Text("Read: \(cvResults.count)/\(maxCvValue)")
                                 .foregroundStyle(.secondary)
                         }
                     }
@@ -193,20 +204,53 @@ struct ContentView: View {
                             cvValue = v
                         }
                     }
-                    .frame(minHeight: 220)
+                    .frame(minHeight: 220, maxHeight: 220)
                 }
 
-                GroupBox("Log") {
-                    ScrollView {
-                        Text(client.logText)
-                            .font(.system(.caption, design: .monospaced))
-                            .lineLimit(40)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .textSelection(.enabled)
-                            .padding(.vertical, 4)
+                GroupBox {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("Log")
+                                .font(.headline)
+
+                            Spacer()
+
+                            Button("Clear Log") {
+                                client.clearLog()
+                            }
+                            .disabled(client.logText.isEmpty)
+                        }
+
+                        Divider()
+
+                        ScrollViewReader { proxy in
+                            ScrollView {
+                                Text(client.logText)
+                                    .font(.system(.caption, design: .monospaced))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .textSelection(.enabled)
+                                    .padding(.vertical, 4)
+
+                                // Anchor at bottom for scrolling
+                                Color.clear
+                                    .frame(height: 1)
+                                    .id("LOG_BOTTOM")
+                            }
+                            .frame(minHeight: 160)
+                            .onChange(of: client.logText) { _ in
+                                // Auto-scroll to bottom whenever new log arrives
+                                withAnimation(nil) {
+                                    proxy.scrollTo("LOG_BOTTOM", anchor: .bottom)
+                                }
+                            }
+                            .onAppear {
+                                // Ensure it starts scrolled to bottom
+                                proxy.scrollTo("LOG_BOTTOM", anchor: .bottom)
+                            }
+                        }
                     }
-                    .frame(minHeight: 160)
-                }
+                } // no "Log" title here because we made our own header row
+
 
                 Spacer()
             }
@@ -216,11 +260,10 @@ struct ContentView: View {
                 switch event {
                     case .cvResult(let cv0, let value):
                         let cv1 = cv0 &+ 1
-                        // Only store 1..255 as requested
-                        if (1...255).contains(cv1) {
+                        if (1...UInt16(maxCvValue)).contains(cv1) {
                             cvResults[cv1] = value
                         }
-                        // ✅ If the user is currently viewing this CV, update the editor + bit view
+                        // If the user is currently viewing this CV, update the editor + bit view
                         if cv1 == cvNumber1Based {
                             cvValue = value
                         }
@@ -254,7 +297,8 @@ struct ContentView: View {
     }
 
     private func writeCV() {
-        guard (1...255).contains(cvNumber1Based) else { return }
+        guard !isCurrentReadOnly else { return }
+        guard (1...UInt16(maxCvValue)).contains(cvNumber1Based) else { return }
         let cv0 = cvNumber1Based - 1
 
         let packet = Z21Protocol.makePOMWriteBytePacket(
@@ -266,7 +310,7 @@ struct ContentView: View {
     }
 
     private func readCV(single cv1Based: UInt16) {
-        guard (1...255).contains(cv1Based) else { return }
+        guard (1...UInt16(maxCvValue)).contains(cv1Based) else { return }
         let cv0 = cv1Based - 1
 
         let packet = Z21Protocol.makePOMReadBytePacket(
@@ -280,7 +324,7 @@ struct ContentView: View {
         rangeTask?.cancel()
 
         rangeTask = Task {
-            for cv in 1...255 {
+            for cv in 1...maxCvValue {
                 if Task.isCancelled { break }
                 readCV(single: UInt16(cv))
 
@@ -334,6 +378,9 @@ struct ContentView: View {
         client.appendExternalLog(line)
     }
 
+    private var isCurrentReadOnly: Bool {
+        currentMeta?.readOnly == true
+    }
 }
 
 struct CVRow: Identifiable {

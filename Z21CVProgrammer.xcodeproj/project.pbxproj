@@ -42,7 +42,7 @@
 /* Begin PBXFileReference section */
 		C7A03EBA2EF8B87900D82C66 /* Z21CVProgrammer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Z21CVProgrammer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A03EBD2EF8B87900D82C66 /* Z21CVProgrammerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21CVProgrammerApp.swift; sourceTree = "<group>"; };
-		C7A03EBF2EF8B87900D82C66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C7A03EBF2EF8B87900D82C66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		C7A03EC12EF8B88000D82C66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7A03EC42EF8B88000D82C66 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C7A03EC62EF8B88000D82C66 /* Z21CVProgrammer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Z21CVProgrammer.entitlements; sourceTree = "<group>"; };
