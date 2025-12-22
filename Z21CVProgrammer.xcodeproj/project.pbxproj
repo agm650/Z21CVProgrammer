@@ -1,0 +1,607 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C7A03EBE2EF8B87900D82C66 /* Z21CVProgrammerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EBD2EF8B87900D82C66 /* Z21CVProgrammerApp.swift */; };
+		C7A03EC02EF8B87900D82C66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EBF2EF8B87900D82C66 /* ContentView.swift */; };
+		C7A03EC22EF8B88000D82C66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7A03EC12EF8B88000D82C66 /* Assets.xcassets */; };
+		C7A03EC52EF8B88000D82C66 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7A03EC42EF8B88000D82C66 /* Preview Assets.xcassets */; };
+		C7A03ED02EF8B88000D82C66 /* Z21CVProgrammerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03ECF2EF8B88000D82C66 /* Z21CVProgrammerTests.swift */; };
+		C7A03EDA2EF8B88000D82C66 /* Z21CVProgrammerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03ED92EF8B88000D82C66 /* Z21CVProgrammerUITests.swift */; };
+		C7A03EDC2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EDB2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift */; };
+		C7A03EE92EF8B97E00D82C66 /* Z21Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EE82EF8B97E00D82C66 /* Z21Client.swift */; };
+		C7A03EEB2EF8B99E00D82C66 /* Z21Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EEA2EF8B99E00D82C66 /* Z21Protocol.swift */; };
+		C7A03EEF2EF8BDB900D82C66 /* BitEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EEE2EF8BDB900D82C66 /* BitEditorView.swift */; };
+		C7A03EF12EF8C02400D82C66 /* cv_metadata.json in Resources */ = {isa = PBXBuildFile; fileRef = C7A03EF02EF8C02400D82C66 /* cv_metadata.json */; };
+		C7A03EF32EF8C05100D82C66 /* CVMetaDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EF22EF8C05100D82C66 /* CVMetaDataStore.swift */; };
+		C7A03EF52EF8C64B00D82C66 /* CVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EF42EF8C64B00D82C66 /* CVExport.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C7A03ECC2EF8B88000D82C66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C7A03EB22EF8B87900D82C66 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C7A03EB92EF8B87900D82C66;
+			remoteInfo = Z21CVProgrammer;
+		};
+		C7A03ED62EF8B88000D82C66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C7A03EB22EF8B87900D82C66 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C7A03EB92EF8B87900D82C66;
+			remoteInfo = Z21CVProgrammer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C7A03EBA2EF8B87900D82C66 /* Z21CVProgrammer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Z21CVProgrammer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7A03EBD2EF8B87900D82C66 /* Z21CVProgrammerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21CVProgrammerApp.swift; sourceTree = "<group>"; };
+		C7A03EBF2EF8B87900D82C66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C7A03EC12EF8B88000D82C66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C7A03EC42EF8B88000D82C66 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C7A03EC62EF8B88000D82C66 /* Z21CVProgrammer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Z21CVProgrammer.entitlements; sourceTree = "<group>"; };
+		C7A03ECB2EF8B88000D82C66 /* Z21CVProgrammerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Z21CVProgrammerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7A03ECF2EF8B88000D82C66 /* Z21CVProgrammerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21CVProgrammerTests.swift; sourceTree = "<group>"; };
+		C7A03ED52EF8B88000D82C66 /* Z21CVProgrammerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Z21CVProgrammerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7A03ED92EF8B88000D82C66 /* Z21CVProgrammerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21CVProgrammerUITests.swift; sourceTree = "<group>"; };
+		C7A03EDB2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21CVProgrammerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C7A03EE82EF8B97E00D82C66 /* Z21Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21Client.swift; sourceTree = "<group>"; };
+		C7A03EEA2EF8B99E00D82C66 /* Z21Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21Protocol.swift; sourceTree = "<group>"; };
+		C7A03EEE2EF8BDB900D82C66 /* BitEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitEditorView.swift; sourceTree = "<group>"; };
+		C7A03EF02EF8C02400D82C66 /* cv_metadata.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cv_metadata.json; sourceTree = "<group>"; };
+		C7A03EF22EF8C05100D82C66 /* CVMetaDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVMetaDataStore.swift; sourceTree = "<group>"; };
+		C7A03EF42EF8C64B00D82C66 /* CVExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVExport.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C7A03EB72EF8B87900D82C66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7A03EC82EF8B88000D82C66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7A03ED22EF8B88000D82C66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C7A03EB12EF8B87900D82C66 = {
+			isa = PBXGroup;
+			children = (
+				C7A03EBC2EF8B87900D82C66 /* Z21CVProgrammer */,
+				C7A03ECE2EF8B88000D82C66 /* Z21CVProgrammerTests */,
+				C7A03ED82EF8B88000D82C66 /* Z21CVProgrammerUITests */,
+				C7A03EBB2EF8B87900D82C66 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C7A03EBB2EF8B87900D82C66 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C7A03EBA2EF8B87900D82C66 /* Z21CVProgrammer.app */,
+				C7A03ECB2EF8B88000D82C66 /* Z21CVProgrammerTests.xctest */,
+				C7A03ED52EF8B88000D82C66 /* Z21CVProgrammerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C7A03EBC2EF8B87900D82C66 /* Z21CVProgrammer */ = {
+			isa = PBXGroup;
+			children = (
+				C7A03EBD2EF8B87900D82C66 /* Z21CVProgrammerApp.swift */,
+				C7A03EBF2EF8B87900D82C66 /* ContentView.swift */,
+				C7A03EF02EF8C02400D82C66 /* cv_metadata.json */,
+				C7A03EF42EF8C64B00D82C66 /* CVExport.swift */,
+				C7A03EF22EF8C05100D82C66 /* CVMetaDataStore.swift */,
+				C7A03EE82EF8B97E00D82C66 /* Z21Client.swift */,
+				C7A03EEA2EF8B99E00D82C66 /* Z21Protocol.swift */,
+				C7A03EC12EF8B88000D82C66 /* Assets.xcassets */,
+				C7A03EC62EF8B88000D82C66 /* Z21CVProgrammer.entitlements */,
+				C7A03EC32EF8B88000D82C66 /* Preview Content */,
+				C7A03EEE2EF8BDB900D82C66 /* BitEditorView.swift */,
+			);
+			path = Z21CVProgrammer;
+			sourceTree = "<group>";
+		};
+		C7A03EC32EF8B88000D82C66 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				C7A03EC42EF8B88000D82C66 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C7A03ECE2EF8B88000D82C66 /* Z21CVProgrammerTests */ = {
+			isa = PBXGroup;
+			children = (
+				C7A03ECF2EF8B88000D82C66 /* Z21CVProgrammerTests.swift */,
+			);
+			path = Z21CVProgrammerTests;
+			sourceTree = "<group>";
+		};
+		C7A03ED82EF8B88000D82C66 /* Z21CVProgrammerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C7A03ED92EF8B88000D82C66 /* Z21CVProgrammerUITests.swift */,
+				C7A03EDB2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift */,
+			);
+			path = Z21CVProgrammerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C7A03EB92EF8B87900D82C66 /* Z21CVProgrammer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C7A03EDF2EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammer" */;
+			buildPhases = (
+				C7A03EB62EF8B87900D82C66 /* Sources */,
+				C7A03EB72EF8B87900D82C66 /* Frameworks */,
+				C7A03EB82EF8B87900D82C66 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Z21CVProgrammer;
+			productName = Z21CVProgrammer;
+			productReference = C7A03EBA2EF8B87900D82C66 /* Z21CVProgrammer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C7A03ECA2EF8B88000D82C66 /* Z21CVProgrammerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C7A03EE22EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammerTests" */;
+			buildPhases = (
+				C7A03EC72EF8B88000D82C66 /* Sources */,
+				C7A03EC82EF8B88000D82C66 /* Frameworks */,
+				C7A03EC92EF8B88000D82C66 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C7A03ECD2EF8B88000D82C66 /* PBXTargetDependency */,
+			);
+			name = Z21CVProgrammerTests;
+			productName = Z21CVProgrammerTests;
+			productReference = C7A03ECB2EF8B88000D82C66 /* Z21CVProgrammerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C7A03ED42EF8B88000D82C66 /* Z21CVProgrammerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C7A03EE52EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammerUITests" */;
+			buildPhases = (
+				C7A03ED12EF8B88000D82C66 /* Sources */,
+				C7A03ED22EF8B88000D82C66 /* Frameworks */,
+				C7A03ED32EF8B88000D82C66 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C7A03ED72EF8B88000D82C66 /* PBXTargetDependency */,
+			);
+			name = Z21CVProgrammerUITests;
+			productName = Z21CVProgrammerUITests;
+			productReference = C7A03ED52EF8B88000D82C66 /* Z21CVProgrammerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C7A03EB22EF8B87900D82C66 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					C7A03EB92EF8B87900D82C66 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					C7A03ECA2EF8B88000D82C66 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = C7A03EB92EF8B87900D82C66;
+					};
+					C7A03ED42EF8B88000D82C66 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = C7A03EB92EF8B87900D82C66;
+					};
+				};
+			};
+			buildConfigurationList = C7A03EB52EF8B87900D82C66 /* Build configuration list for PBXProject "Z21CVProgrammer" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C7A03EB12EF8B87900D82C66;
+			productRefGroup = C7A03EBB2EF8B87900D82C66 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C7A03EB92EF8B87900D82C66 /* Z21CVProgrammer */,
+				C7A03ECA2EF8B88000D82C66 /* Z21CVProgrammerTests */,
+				C7A03ED42EF8B88000D82C66 /* Z21CVProgrammerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C7A03EB82EF8B87900D82C66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7A03EC52EF8B88000D82C66 /* Preview Assets.xcassets in Resources */,
+				C7A03EF12EF8C02400D82C66 /* cv_metadata.json in Resources */,
+				C7A03EC22EF8B88000D82C66 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7A03EC92EF8B88000D82C66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7A03ED32EF8B88000D82C66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C7A03EB62EF8B87900D82C66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7A03EC02EF8B87900D82C66 /* ContentView.swift in Sources */,
+				C7A03EBE2EF8B87900D82C66 /* Z21CVProgrammerApp.swift in Sources */,
+				C7A03EF52EF8C64B00D82C66 /* CVExport.swift in Sources */,
+				C7A03EF32EF8C05100D82C66 /* CVMetaDataStore.swift in Sources */,
+				C7A03EEF2EF8BDB900D82C66 /* BitEditorView.swift in Sources */,
+				C7A03EE92EF8B97E00D82C66 /* Z21Client.swift in Sources */,
+				C7A03EEB2EF8B99E00D82C66 /* Z21Protocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7A03EC72EF8B88000D82C66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7A03ED02EF8B88000D82C66 /* Z21CVProgrammerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7A03ED12EF8B88000D82C66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7A03EDA2EF8B88000D82C66 /* Z21CVProgrammerUITests.swift in Sources */,
+				C7A03EDC2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C7A03ECD2EF8B88000D82C66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C7A03EB92EF8B87900D82C66 /* Z21CVProgrammer */;
+			targetProxy = C7A03ECC2EF8B88000D82C66 /* PBXContainerItemProxy */;
+		};
+		C7A03ED72EF8B88000D82C66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C7A03EB92EF8B87900D82C66 /* Z21CVProgrammer */;
+			targetProxy = C7A03ED62EF8B88000D82C66 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C7A03EDD2EF8B88000D82C66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C7A03EDE2EF8B88000D82C66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		C7A03EE02EF8B88000D82C66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Z21CVProgrammer/Z21CVProgrammer.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Z21CVProgrammer/Preview Content\"";
+				DEVELOPMENT_TEAM = 3YCBWTYW6P;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C7A03EE12EF8B88000D82C66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Z21CVProgrammer/Z21CVProgrammer.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Z21CVProgrammer/Preview Content\"";
+				DEVELOPMENT_TEAM = 3YCBWTYW6P;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C7A03EE32EF8B88000D82C66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3YCBWTYW6P;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Z21CVProgrammer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Z21CVProgrammer";
+			};
+			name = Debug;
+		};
+		C7A03EE42EF8B88000D82C66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3YCBWTYW6P;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Z21CVProgrammer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Z21CVProgrammer";
+			};
+			name = Release;
+		};
+		C7A03EE62EF8B88000D82C66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3YCBWTYW6P;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Z21CVProgrammer;
+			};
+			name = Debug;
+		};
+		C7A03EE72EF8B88000D82C66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3YCBWTYW6P;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Z21CVProgrammer;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C7A03EB52EF8B87900D82C66 /* Build configuration list for PBXProject "Z21CVProgrammer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7A03EDD2EF8B88000D82C66 /* Debug */,
+				C7A03EDE2EF8B88000D82C66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7A03EDF2EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7A03EE02EF8B88000D82C66 /* Debug */,
+				C7A03EE12EF8B88000D82C66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7A03EE22EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7A03EE32EF8B88000D82C66 /* Debug */,
+				C7A03EE42EF8B88000D82C66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7A03EE52EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7A03EE62EF8B88000D82C66 /* Debug */,
+				C7A03EE72EF8B88000D82C66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C7A03EB22EF8B87900D82C66 /* Project object */;
+}

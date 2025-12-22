@@ -1,0 +1,29 @@
+{
+    "cvs": [
+        {
+            "number": 1,
+            "name": "Address",
+            "description": "Primary (short) locomotive address (typically 1–127)."
+        },
+        {
+            "number": 2,
+            "name": "Initial Speed",
+            "description": "Start voltage / Vstart (kick-start speed)."
+        },
+        {
+            "number": 29,
+            "name": "Configuration Register",
+            "description": "Bit field controlling core decoder behavior (direction, speed steps, addressing, etc.).",
+            "bitLabels": {
+                "0": "Direction",
+                "1": "28/128 speed steps",
+                "2": "Analog operation",
+                "3": "Comms (varies)",
+                "4": "Speed table selection",
+                "5": "Long address enable",
+                "6": "Reserved",
+                "7": "Reserved"
+            }
+        }
+    ]
+}
