@@ -7,8 +7,17 @@
 
 import SwiftUI
 
+enum CommandStationType: String, CaseIterable, Identifiable {
+    case z21 = "Roco z21"
+    case dccEx = "DCC-EX"
+    var id: String { rawValue }
+}
+
 struct ContentView: View {
-    @StateObject private var client = Z21Client()
+    @EnvironmentObject var meta: CVMetadataStore
+    @StateObject var z21 = Z21Client()
+    @StateObject var dcc = DCCEXBackend()
+    @State private var type: CommandStationType = .z21
 
     @State private var host: String = "192.168.0.111"
     @State private var port: UInt16 = 21105
@@ -36,17 +45,20 @@ struct ContentView: View {
     @State private var exportDocument = CVExportDocument(data: Data())
     @State private var exportFilename = "cv_export.csv"
 
+    private var client: any CVBackend { type == .z21 ? z21 : dcc }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
-                Text("z21 POM CV Tool")
+                Text("CV Programming Tool")
                     .font(.title2)
                     .bold()
-
+                Picker("Protocol", selection: $type) {
+                    ForEach(CommandStationType.allCases) { Text($0.rawValue).tag($0) }
+                }
                 GroupBox("Connection") {
                     HStack {
-                        TextField("z21 IP / Host", text: $host)
+                        TextField("IP / Host", text: $host)
                             .textFieldStyle(.roundedBorder)
                             .frame(minWidth: 220)
 
@@ -56,9 +68,9 @@ struct ContentView: View {
 
                         Button(client.isRunning ? "Disconnect" : "Connect") {
                             if client.isRunning {
-                                client.stop()
+                                client.disconnect()
                             } else {
-                                client.start(host: host, port: port)
+                                client.connect(host: host, port: port)
                             }
                         }
                     }
@@ -75,6 +87,8 @@ struct ContentView: View {
                 GroupBox("POM (Programming on the Main)") {
                     VStack(alignment: .leading, spacing: 10) {
 
+                        metadataErrorView
+
                         Text("Note: POM read needs RailCom enabled in the Z21 and in the decoder.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
@@ -87,6 +101,7 @@ struct ContentView: View {
                                 TextField("", value: $locoAddress, format: .number)
                                     .textFieldStyle(.roundedBorder)
                                     .frame(width: 160)
+                                    .disabled(type == .dccEx)
                             }
 
                             VStack(alignment: .leading) {
@@ -118,11 +133,14 @@ struct ContentView: View {
 
                             Spacer()
 
-                            Button("Write CV") { writeCV() }
+                            Button("Write CV") { client.writeCV(locoAddress: type == .z21 ? locoAddress : nil, cv: cvNumber1Based, value: cvValue) }
                                 .disabled(!client.isRunning || isCurrentReadOnly)
 
-                            Button("Read CV") { readCV(single: cvNumber1Based) }
-                                .disabled(!client.isRunning)
+                            Button("Read CV") {
+                                // readCV(single: cvNumber1Based)
+                                client.readCV(
+                                    locoAddress: type == .z21 ? locoAddress : nil, cv: cvNumber1Based)
+                            }.disabled(!client.isRunning)
                         }
 
                         if let meta = currentMeta {
@@ -256,23 +274,23 @@ struct ContentView: View {
             }
             .padding(16)
             .frame(minWidth: 820, minHeight: 620)
-            .onReceive(client.events) { event in
-                switch event {
-                    case .cvResult(let cv0, let value):
-                        let cv1 = cv0 &+ 1
-                        if (1...UInt16(maxCvValue)).contains(cv1) {
-                            cvResults[cv1] = value
-                        }
-                        // If the user is currently viewing this CV, update the editor + bit view
-                        if cv1 == cvNumber1Based {
-                            cvValue = value
-                        }
-                    case .cvNack:
-                        break
-                    case .unknown:
-                        break
-                }
-            }
+//            .onReceive(client.events) { event in
+//                switch event {
+//                    case .cvResult(let cv0, let value):
+//                        let cv1 = cv0 &+ 1
+//                        if (1...UInt16(maxCvValue)).contains(cv1) {
+//                            cvResults[cv1] = value
+//                        }
+//                        // If the user is currently viewing this CV, update the editor + bit view
+//                        if cv1 == cvNumber1Based {
+//                            cvValue = value
+//                        }
+//                    case .cvNack:
+//                        break
+//                    case .unknown:
+//                        break
+//                }
+//            }
             .fileExporter(
                 isPresented: $isExporting,
                 document: exportDocument,
@@ -296,37 +314,14 @@ struct ContentView: View {
             .sorted { $0.cv < $1.cv }
     }
 
-    private func writeCV() {
-        guard !isCurrentReadOnly else { return }
-        guard (1...UInt16(maxCvValue)).contains(cvNumber1Based) else { return }
-        let cv0 = cvNumber1Based - 1
-
-        let packet = Z21Protocol.makePOMWriteBytePacket(
-            locoAddress: locoAddress,
-            cvAddress0Based: cv0,
-            value: cvValue
-        )
-        client.send(packet, note: "POM WRITE: addr=\(locoAddress) cv=\(cvNumber1Based) val=\(cvValue)")
-    }
-
-    private func readCV(single cv1Based: UInt16) {
-        guard (1...UInt16(maxCvValue)).contains(cv1Based) else { return }
-        let cv0 = cv1Based - 1
-
-        let packet = Z21Protocol.makePOMReadBytePacket(
-            locoAddress: locoAddress,
-            cvAddress0Based: cv0
-        )
-        client.send(packet, note: "POM READ: addr=\(locoAddress) cv=\(cv1Based)")
-    }
-
     private func startReadRange() {
         rangeTask?.cancel()
 
         rangeTask = Task {
             for cv in 1...maxCvValue {
                 if Task.isCancelled { break }
-                readCV(single: UInt16(cv))
+                // client.readCV(locoAddress: type == .z21 ? locoAddress : nil, cv: cvNumber1Based)
+                client.readCV(locoAddress: type == .z21 ? locoAddress : nil, cv: UInt16(cv))
 
                 // Small pacing to avoid flooding the command station.
                 // Tweak as needed depending on your z21/decoder responsiveness.
@@ -338,15 +333,16 @@ struct ContentView: View {
     }
 
     private var currentMeta: CVMeta? {
-        let cvstore = metaStore.meta(for: cvNumber1Based)
+       return   metaStore.meta(for: cvNumber1Based)
+    }
 
+    @ViewBuilder
+    private var metadataErrorView: some View {
         if let err = metaStore.loadError {
             Text("Metadata load error: \(err)")
                 .font(.footnote)
                 .foregroundStyle(.red)
         }
-
-        return cvstore
     }
 
     private func prepareExport() {

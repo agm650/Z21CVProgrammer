@@ -20,6 +20,9 @@
 		C7A03EF12EF8C02400D82C66 /* cv_metadata.json in Resources */ = {isa = PBXBuildFile; fileRef = C7A03EF02EF8C02400D82C66 /* cv_metadata.json */; };
 		C7A03EF32EF8C05100D82C66 /* CVMetaDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EF22EF8C05100D82C66 /* CVMetaDataStore.swift */; };
 		C7A03EF52EF8C64B00D82C66 /* CVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EF42EF8C64B00D82C66 /* CVExport.swift */; };
+		C7A837052F12E149000B8C90 /* CommandStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A837042F12E149000B8C90 /* CommandStation.swift */; };
+		C7A8370A2F12EFF0000B8C90 /* CVBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A837082F12EFF0000B8C90 /* CVBackend.swift */; };
+		C7A8370B2F12EFF0000B8C90 /* DCCEXBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A837092F12EFF0000B8C90 /* DCCEXBackend.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +60,9 @@
 		C7A03EF02EF8C02400D82C66 /* cv_metadata.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cv_metadata.json; sourceTree = "<group>"; };
 		C7A03EF22EF8C05100D82C66 /* CVMetaDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVMetaDataStore.swift; sourceTree = "<group>"; };
 		C7A03EF42EF8C64B00D82C66 /* CVExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVExport.swift; sourceTree = "<group>"; };
+		C7A837042F12E149000B8C90 /* CommandStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandStation.swift; sourceTree = "<group>"; };
+		C7A837082F12EFF0000B8C90 /* CVBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVBackend.swift; sourceTree = "<group>"; };
+		C7A837092F12EFF0000B8C90 /* DCCEXBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DCCEXBackend.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +113,8 @@
 		C7A03EBC2EF8B87900D82C66 /* CVProgrammer */ = {
 			isa = PBXGroup;
 			children = (
+				C7A837082F12EFF0000B8C90 /* CVBackend.swift */,
+				C7A837092F12EFF0000B8C90 /* DCCEXBackend.swift */,
 				C7A03EBD2EF8B87900D82C66 /* CVProgrammerApp.swift */,
 				C7A03EBF2EF8B87900D82C66 /* ContentView.swift */,
 				C7A03EF02EF8C02400D82C66 /* cv_metadata.json */,
@@ -118,6 +126,7 @@
 				C7A03EC62EF8B88000D82C66 /* CVProgrammer.entitlements */,
 				C7A03EC32EF8B88000D82C66 /* Preview Content */,
 				C7A03EEE2EF8BDB900D82C66 /* BitEditorView.swift */,
+				C7A837042F12E149000B8C90 /* CommandStation.swift */,
 			);
 			path = CVProgrammer;
 			sourceTree = "<group>";
@@ -278,10 +287,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7A8370B2F12EFF0000B8C90 /* DCCEXBackend.swift in Sources */,
+				C7A837052F12E149000B8C90 /* CommandStation.swift in Sources */,
 				C7A03EC02EF8B87900D82C66 /* ContentView.swift in Sources */,
 				C7A03EBE2EF8B87900D82C66 /* CVProgrammerApp.swift in Sources */,
 				C7A03EF52EF8C64B00D82C66 /* CVExport.swift in Sources */,
 				C7A03EF32EF8C05100D82C66 /* CVMetaDataStore.swift in Sources */,
+				C7A8370A2F12EFF0000B8C90 /* CVBackend.swift in Sources */,
 				C7A03EEF2EF8BDB900D82C66 /* BitEditorView.swift in Sources */,
 				C7A03EE92EF8B97E00D82C66 /* Z21Client.swift in Sources */,
 				C7A03EEB2EF8B99E00D82C66 /* Z21Protocol.swift in Sources */,
