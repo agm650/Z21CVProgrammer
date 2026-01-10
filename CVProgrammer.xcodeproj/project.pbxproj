@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C7A03EBE2EF8B87900D82C66 /* Z21CVProgrammerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EBD2EF8B87900D82C66 /* Z21CVProgrammerApp.swift */; };
+		C7A03EBE2EF8B87900D82C66 /* CVProgrammerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EBD2EF8B87900D82C66 /* CVProgrammerApp.swift */; };
 		C7A03EC02EF8B87900D82C66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EBF2EF8B87900D82C66 /* ContentView.swift */; };
 		C7A03EC22EF8B88000D82C66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7A03EC12EF8B88000D82C66 /* Assets.xcassets */; };
 		C7A03EC52EF8B88000D82C66 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7A03EC42EF8B88000D82C66 /* Preview Assets.xcassets */; };
-		C7A03ED02EF8B88000D82C66 /* Z21CVProgrammerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03ECF2EF8B88000D82C66 /* Z21CVProgrammerTests.swift */; };
-		C7A03EDA2EF8B88000D82C66 /* Z21CVProgrammerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03ED92EF8B88000D82C66 /* Z21CVProgrammerUITests.swift */; };
-		C7A03EDC2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EDB2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift */; };
+		C7A03ED02EF8B88000D82C66 /* CVProgrammerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03ECF2EF8B88000D82C66 /* CVProgrammerTests.swift */; };
+		C7A03EDA2EF8B88000D82C66 /* CVProgrammerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03ED92EF8B88000D82C66 /* CVProgrammerUITests.swift */; };
+		C7A03EDC2EF8B88000D82C66 /* CVProgrammerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EDB2EF8B88000D82C66 /* CVProgrammerUITestsLaunchTests.swift */; };
 		C7A03EE92EF8B97E00D82C66 /* Z21Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EE82EF8B97E00D82C66 /* Z21Client.swift */; };
 		C7A03EEB2EF8B99E00D82C66 /* Z21Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EEA2EF8B99E00D82C66 /* Z21Protocol.swift */; };
 		C7A03EEF2EF8BDB900D82C66 /* BitEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A03EEE2EF8BDB900D82C66 /* BitEditorView.swift */; };
@@ -40,17 +40,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C7A03EBA2EF8B87900D82C66 /* Z21CVProgrammer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Z21CVProgrammer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7A03EBD2EF8B87900D82C66 /* Z21CVProgrammerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21CVProgrammerApp.swift; sourceTree = "<group>"; };
+		C7A03EBA2EF8B87900D82C66 /* CVProgrammer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CVProgrammer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7A03EBD2EF8B87900D82C66 /* CVProgrammerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVProgrammerApp.swift; sourceTree = "<group>"; };
 		C7A03EBF2EF8B87900D82C66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		C7A03EC12EF8B88000D82C66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7A03EC42EF8B88000D82C66 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		C7A03EC62EF8B88000D82C66 /* Z21CVProgrammer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Z21CVProgrammer.entitlements; sourceTree = "<group>"; };
-		C7A03ECB2EF8B88000D82C66 /* Z21CVProgrammerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Z21CVProgrammerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7A03ECF2EF8B88000D82C66 /* Z21CVProgrammerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21CVProgrammerTests.swift; sourceTree = "<group>"; };
-		C7A03ED52EF8B88000D82C66 /* Z21CVProgrammerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Z21CVProgrammerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7A03ED92EF8B88000D82C66 /* Z21CVProgrammerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21CVProgrammerUITests.swift; sourceTree = "<group>"; };
-		C7A03EDB2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21CVProgrammerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C7A03EC62EF8B88000D82C66 /* CVProgrammer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CVProgrammer.entitlements; sourceTree = "<group>"; };
+		C7A03ECB2EF8B88000D82C66 /* CVProgrammerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CVProgrammerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7A03ECF2EF8B88000D82C66 /* CVProgrammerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVProgrammerTests.swift; sourceTree = "<group>"; };
+		C7A03ED52EF8B88000D82C66 /* CVProgrammerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CVProgrammerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7A03ED92EF8B88000D82C66 /* CVProgrammerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVProgrammerUITests.swift; sourceTree = "<group>"; };
+		C7A03EDB2EF8B88000D82C66 /* CVProgrammerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVProgrammerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C7A03EE82EF8B97E00D82C66 /* Z21Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21Client.swift; sourceTree = "<group>"; };
 		C7A03EEA2EF8B99E00D82C66 /* Z21Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Z21Protocol.swift; sourceTree = "<group>"; };
 		C7A03EEE2EF8BDB900D82C66 /* BitEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitEditorView.swift; sourceTree = "<group>"; };
@@ -87,8 +87,8 @@
 		C7A03EB12EF8B87900D82C66 = {
 			isa = PBXGroup;
 			children = (
-				C7A03EBC2EF8B87900D82C66 /* Z21CVProgrammer */,
-				C7A03ECE2EF8B88000D82C66 /* Z21CVProgrammerTests */,
+				C7A03EBC2EF8B87900D82C66 /* CVProgrammer */,
+				C7A03ECE2EF8B88000D82C66 /* CVProgrammerTests */,
 				C7A03ED82EF8B88000D82C66 /* Z21CVProgrammerUITests */,
 				C7A03EBB2EF8B87900D82C66 /* Products */,
 			);
@@ -97,17 +97,17 @@
 		C7A03EBB2EF8B87900D82C66 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C7A03EBA2EF8B87900D82C66 /* Z21CVProgrammer.app */,
-				C7A03ECB2EF8B88000D82C66 /* Z21CVProgrammerTests.xctest */,
-				C7A03ED52EF8B88000D82C66 /* Z21CVProgrammerUITests.xctest */,
+				C7A03EBA2EF8B87900D82C66 /* CVProgrammer.app */,
+				C7A03ECB2EF8B88000D82C66 /* CVProgrammerTests.xctest */,
+				C7A03ED52EF8B88000D82C66 /* CVProgrammerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C7A03EBC2EF8B87900D82C66 /* Z21CVProgrammer */ = {
+		C7A03EBC2EF8B87900D82C66 /* CVProgrammer */ = {
 			isa = PBXGroup;
 			children = (
-				C7A03EBD2EF8B87900D82C66 /* Z21CVProgrammerApp.swift */,
+				C7A03EBD2EF8B87900D82C66 /* CVProgrammerApp.swift */,
 				C7A03EBF2EF8B87900D82C66 /* ContentView.swift */,
 				C7A03EF02EF8C02400D82C66 /* cv_metadata.json */,
 				C7A03EF42EF8C64B00D82C66 /* CVExport.swift */,
@@ -115,11 +115,11 @@
 				C7A03EE82EF8B97E00D82C66 /* Z21Client.swift */,
 				C7A03EEA2EF8B99E00D82C66 /* Z21Protocol.swift */,
 				C7A03EC12EF8B88000D82C66 /* Assets.xcassets */,
-				C7A03EC62EF8B88000D82C66 /* Z21CVProgrammer.entitlements */,
+				C7A03EC62EF8B88000D82C66 /* CVProgrammer.entitlements */,
 				C7A03EC32EF8B88000D82C66 /* Preview Content */,
 				C7A03EEE2EF8BDB900D82C66 /* BitEditorView.swift */,
 			);
-			path = Z21CVProgrammer;
+			path = CVProgrammer;
 			sourceTree = "<group>";
 		};
 		C7A03EC32EF8B88000D82C66 /* Preview Content */ = {
@@ -130,19 +130,19 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		C7A03ECE2EF8B88000D82C66 /* Z21CVProgrammerTests */ = {
+		C7A03ECE2EF8B88000D82C66 /* CVProgrammerTests */ = {
 			isa = PBXGroup;
 			children = (
-				C7A03ECF2EF8B88000D82C66 /* Z21CVProgrammerTests.swift */,
+				C7A03ECF2EF8B88000D82C66 /* CVProgrammerTests.swift */,
 			);
-			path = Z21CVProgrammerTests;
+			path = CVProgrammerTests;
 			sourceTree = "<group>";
 		};
 		C7A03ED82EF8B88000D82C66 /* Z21CVProgrammerUITests */ = {
 			isa = PBXGroup;
 			children = (
-				C7A03ED92EF8B88000D82C66 /* Z21CVProgrammerUITests.swift */,
-				C7A03EDB2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift */,
+				C7A03ED92EF8B88000D82C66 /* CVProgrammerUITests.swift */,
+				C7A03EDB2EF8B88000D82C66 /* CVProgrammerUITestsLaunchTests.swift */,
 			);
 			path = Z21CVProgrammerUITests;
 			sourceTree = "<group>";
@@ -150,9 +150,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C7A03EB92EF8B87900D82C66 /* Z21CVProgrammer */ = {
+		C7A03EB92EF8B87900D82C66 /* CVProgrammer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C7A03EDF2EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammer" */;
+			buildConfigurationList = C7A03EDF2EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "CVProgrammer" */;
 			buildPhases = (
 				C7A03EB62EF8B87900D82C66 /* Sources */,
 				C7A03EB72EF8B87900D82C66 /* Frameworks */,
@@ -162,14 +162,14 @@
 			);
 			dependencies = (
 			);
-			name = Z21CVProgrammer;
+			name = CVProgrammer;
 			productName = Z21CVProgrammer;
-			productReference = C7A03EBA2EF8B87900D82C66 /* Z21CVProgrammer.app */;
+			productReference = C7A03EBA2EF8B87900D82C66 /* CVProgrammer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C7A03ECA2EF8B88000D82C66 /* Z21CVProgrammerTests */ = {
+		C7A03ECA2EF8B88000D82C66 /* CVProgrammerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C7A03EE22EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammerTests" */;
+			buildConfigurationList = C7A03EE22EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "CVProgrammerTests" */;
 			buildPhases = (
 				C7A03EC72EF8B88000D82C66 /* Sources */,
 				C7A03EC82EF8B88000D82C66 /* Frameworks */,
@@ -180,14 +180,14 @@
 			dependencies = (
 				C7A03ECD2EF8B88000D82C66 /* PBXTargetDependency */,
 			);
-			name = Z21CVProgrammerTests;
+			name = CVProgrammerTests;
 			productName = Z21CVProgrammerTests;
-			productReference = C7A03ECB2EF8B88000D82C66 /* Z21CVProgrammerTests.xctest */;
+			productReference = C7A03ECB2EF8B88000D82C66 /* CVProgrammerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C7A03ED42EF8B88000D82C66 /* Z21CVProgrammerUITests */ = {
+		C7A03ED42EF8B88000D82C66 /* CVProgrammerUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C7A03EE52EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammerUITests" */;
+			buildConfigurationList = C7A03EE52EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "CVProgrammerUITests" */;
 			buildPhases = (
 				C7A03ED12EF8B88000D82C66 /* Sources */,
 				C7A03ED22EF8B88000D82C66 /* Frameworks */,
@@ -198,9 +198,9 @@
 			dependencies = (
 				C7A03ED72EF8B88000D82C66 /* PBXTargetDependency */,
 			);
-			name = Z21CVProgrammerUITests;
+			name = CVProgrammerUITests;
 			productName = Z21CVProgrammerUITests;
-			productReference = C7A03ED52EF8B88000D82C66 /* Z21CVProgrammerUITests.xctest */;
+			productReference = C7A03ED52EF8B88000D82C66 /* CVProgrammerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -226,7 +226,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C7A03EB52EF8B87900D82C66 /* Build configuration list for PBXProject "Z21CVProgrammer" */;
+			buildConfigurationList = C7A03EB52EF8B87900D82C66 /* Build configuration list for PBXProject "CVProgrammer" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -239,9 +239,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C7A03EB92EF8B87900D82C66 /* Z21CVProgrammer */,
-				C7A03ECA2EF8B88000D82C66 /* Z21CVProgrammerTests */,
-				C7A03ED42EF8B88000D82C66 /* Z21CVProgrammerUITests */,
+				C7A03EB92EF8B87900D82C66 /* CVProgrammer */,
+				C7A03ECA2EF8B88000D82C66 /* CVProgrammerTests */,
+				C7A03ED42EF8B88000D82C66 /* CVProgrammerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -279,7 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7A03EC02EF8B87900D82C66 /* ContentView.swift in Sources */,
-				C7A03EBE2EF8B87900D82C66 /* Z21CVProgrammerApp.swift in Sources */,
+				C7A03EBE2EF8B87900D82C66 /* CVProgrammerApp.swift in Sources */,
 				C7A03EF52EF8C64B00D82C66 /* CVExport.swift in Sources */,
 				C7A03EF32EF8C05100D82C66 /* CVMetaDataStore.swift in Sources */,
 				C7A03EEF2EF8BDB900D82C66 /* BitEditorView.swift in Sources */,
@@ -292,7 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7A03ED02EF8B88000D82C66 /* Z21CVProgrammerTests.swift in Sources */,
+				C7A03ED02EF8B88000D82C66 /* CVProgrammerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,8 +300,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7A03EDA2EF8B88000D82C66 /* Z21CVProgrammerUITests.swift in Sources */,
-				C7A03EDC2EF8B88000D82C66 /* Z21CVProgrammerUITestsLaunchTests.swift in Sources */,
+				C7A03EDA2EF8B88000D82C66 /* CVProgrammerUITests.swift in Sources */,
+				C7A03EDC2EF8B88000D82C66 /* CVProgrammerUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,12 +310,12 @@
 /* Begin PBXTargetDependency section */
 		C7A03ECD2EF8B88000D82C66 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C7A03EB92EF8B87900D82C66 /* Z21CVProgrammer */;
+			target = C7A03EB92EF8B87900D82C66 /* CVProgrammer */;
 			targetProxy = C7A03ECC2EF8B88000D82C66 /* PBXContainerItemProxy */;
 		};
 		C7A03ED72EF8B88000D82C66 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C7A03EB92EF8B87900D82C66 /* Z21CVProgrammer */;
+			target = C7A03EB92EF8B87900D82C66 /* CVProgrammer */;
 			targetProxy = C7A03ED62EF8B88000D82C66 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -439,12 +439,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Z21CVProgrammer/Z21CVProgrammer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CVProgrammer/CVProgrammer.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Z21CVProgrammer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CVProgrammer/Preview Content\"";
 				DEVELOPMENT_TEAM = 3YCBWTYW6P;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -467,12 +467,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Z21CVProgrammer/Z21CVProgrammer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CVProgrammer/CVProgrammer.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Z21CVProgrammer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CVProgrammer/Preview Content\"";
 				DEVELOPMENT_TEAM = 3YCBWTYW6P;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -505,7 +505,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Z21CVProgrammer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Z21CVProgrammer";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CVProgrammer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CVProgrammer";
 			};
 			name = Debug;
 		};
@@ -524,7 +524,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Z21CVProgrammer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Z21CVProgrammer";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CVProgrammer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CVProgrammer";
 			};
 			name = Release;
 		};
@@ -565,7 +565,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C7A03EB52EF8B87900D82C66 /* Build configuration list for PBXProject "Z21CVProgrammer" */ = {
+		C7A03EB52EF8B87900D82C66 /* Build configuration list for PBXProject "CVProgrammer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C7A03EDD2EF8B88000D82C66 /* Debug */,
@@ -574,7 +574,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C7A03EDF2EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammer" */ = {
+		C7A03EDF2EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "CVProgrammer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C7A03EE02EF8B88000D82C66 /* Debug */,
@@ -583,7 +583,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C7A03EE22EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammerTests" */ = {
+		C7A03EE22EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "CVProgrammerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C7A03EE32EF8B88000D82C66 /* Debug */,
@@ -592,7 +592,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C7A03EE52EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "Z21CVProgrammerUITests" */ = {
+		C7A03EE52EF8B88000D82C66 /* Build configuration list for PBXNativeTarget "CVProgrammerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C7A03EE62EF8B88000D82C66 /* Debug */,
