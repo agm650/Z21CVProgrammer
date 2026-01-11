@@ -218,7 +218,7 @@ struct RemoteSettingsPane: View {
                             Spacer()
                         }
 
-                        Text("Default connection used when you choose z21 in the main window.")
+                        Text("Default connection information used in the main window.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }

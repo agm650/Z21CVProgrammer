@@ -11,27 +11,19 @@ import Combine
 @MainActor
 final class Z21Client: ObservableObject, CVBackend {
 
-    internal init(cvEvents: AnyPublisher<CVEvent, Never> = Empty().eraseToAnyPublisher(),
-                  isRunning: Bool = false,
-                  logText: String = "",
-                  connection: NWConnection? = nil) {
-        self.cvEvents = cvEvents
-        self.isRunning = isRunning
-        self.logText = logText
-        self.connection = connection
-    }
-
-    var cvEvents: AnyPublisher<CVEvent, Never>
-
     @Published private(set) var isRunning: Bool = false
     @Published private(set) var logText: String = ""
 
     private let maxLogLines = 100
 
-    private let eventsSubject = PassthroughSubject<any CVBackend, Never>()
-    var events: AnyPublisher<any CVBackend, Never> { eventsSubject.eraseToAnyPublisher() }
+    private let eventsSubject = PassthroughSubject<CVEvent, Never>()
+    var cvEvents: AnyPublisher<CVEvent, Never> { eventsSubject.eraseToAnyPublisher() }
 
     private var connection: NWConnection?
+
+    private var waiters: [UInt8: CheckedContinuation<UInt8?, Never>] = [:]
+    private var writeWaiters: [UInt8: CheckedContinuation<Bool, Never>] = [:]
+
 
     func connect(host: String, port: UInt16) {
         disconnect()
@@ -45,16 +37,28 @@ final class Z21Client: ObservableObject, CVBackend {
         let conn = NWConnection(host: h, port: p, using: .udp)
         self.connection = conn
 
+        conn.stateUpdateHandler = { [weak self] state in
+            Task { @MainActor in
+                self?.handleState(state)
+            }
+        }
+
         conn.start(queue: .global())
         isRunning = true
 
         appendLog("Starting UDP connection to \(host):\(port)")
+        beginReceiveLoop()
     }
 
     func disconnect() {
         connection?.cancel()
         connection = nil
         isRunning = false
+        
+        for (_, cont) in waiters {
+            cont.resume(returning: nil)
+        }
+        waiters.removeAll()
     }
 
     func clearLog() {
@@ -63,14 +67,88 @@ final class Z21Client: ObservableObject, CVBackend {
 
     func readCV(locoAddress: UInt16?, cv: UInt8) {
         guard let locoAddress else { return }
+        guard cv >= 1 else {
+            eventsSubject.send(.failure("Invalid CV number"))
+            return
+        }
         let pkt = Z21Protocol.makePOMReadBytePacket(locoAddress: locoAddress, cvAddress0Based: cv - 1)
         send(pkt)
     }
 
     func writeCV(locoAddress: UInt16?, cv: UInt8, value: UInt8) {
         guard let locoAddress else { return }
+        guard cv >= 1 else {
+            eventsSubject.send(.failure("Invalid CV number"))
+            return
+        }
         let pkt = Z21Protocol.makePOMWriteBytePacket(locoAddress: locoAddress, cvAddress0Based: cv - 1, value: value)
         send(pkt)
+    }
+
+    func readCVAsync(locoAddress: UInt16, cv: UInt8, timeoutMs: Int = 800) async -> UInt8? {
+        guard cv >= 1 else { return nil }
+        let cv1 = cv
+
+        return await withCheckedContinuation { cont in
+            Task { @MainActor [weak self] in
+                guard let self else {
+                    cont.resume(returning: nil)
+                    return
+                }
+
+                self.waiters[cv1] = cont
+
+                let pkt = Z21Protocol.makePOMReadBytePacket(
+                    locoAddress: locoAddress,
+                    cvAddress0Based: cv - 1
+                )
+                self.send(pkt)
+
+                Task { [weak self] in
+                    try? await Task.sleep(nanoseconds: UInt64(timeoutMs) * 1_000_000)
+                    await MainActor.run {
+                        if let c = self?.waiters.removeValue(forKey: cv1) {
+                            c.resume(returning: nil)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    func writeCVAsync(locoAddress: UInt16, cv: UInt8, value: UInt8, timeoutMs: Int = 1200) async -> Bool {
+        guard cv >= 1 else { return false }
+        let cv1 = cv
+
+        return await withCheckedContinuation { cont in
+            Task { @MainActor [weak self] in
+                guard let self else {
+                    cont.resume(returning: false)
+                    return
+                }
+
+                // register waiter first
+                self.writeWaiters[cv1] = cont
+
+                // send
+                let pkt = Z21Protocol.makePOMWriteBytePacket(
+                    locoAddress: locoAddress,
+                    cvAddress0Based: cv - 1,
+                    value: value
+                )
+                self.send(pkt, note: "WRITE CV \(cv)=\(value)")
+
+                // timeout
+                Task { [weak self] in
+                    try? await Task.sleep(nanoseconds: UInt64(timeoutMs) * 1_000_000)
+                    await MainActor.run {
+                        if let c = self?.writeWaiters.removeValue(forKey: cv1) {
+                            c.resume(returning: false)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private func send(_ data: Data, note: String? = nil) {
@@ -88,42 +166,62 @@ final class Z21Client: ObservableObject, CVBackend {
             }
         })
     }
-//
-//    private func beginReceiveLoop() {
-//        guard let conn = connection else { return }
-//
-//        conn.receiveMessage { [weak self] content, _, _, error in
-//            Task { @MainActor in
-//                if let error {
-//                    self?.appendLog("Receive error: \(error)")
-//                } else if let content, !content.isEmpty {
-//                    self?.appendLog("← RX bytes: \(content.hexString)")
-//
-//                    let event = Z21Protocol.parseInbound(content)
-//                    self?.eventsSubject.send(event)
-//
-//                    self?.appendLog("  event: \(event.description)")
-//                }
-//                self?.beginReceiveLoop()
-//            }
-//        }
-//    }
-//
-//    private func handleState(_ state: NWConnection.State) {
-//        switch state {
-//            case .ready:
-//                appendLog("UDP ready.")
-//            case .failed(let err):
-//                appendLog("Connection failed: \(err)")
-//                disconnect()
-//            case .waiting(let err):
-//                appendLog("Connection waiting: \(err)")
-//            case .cancelled:
-//                appendLog("Connection cancelled.")
-//            default:
-//                break
-//        }
-//    }
+
+    private func beginReceiveLoop() {
+        guard let conn = connection else { return }
+
+        conn.receiveMessage { [weak self] content, _, _, error in
+            Task { @MainActor in
+                if let error {
+                    self?.appendLog("Receive error: \(error)")
+                } else if let content, !content.isEmpty {
+                    self?.appendLog("← RX bytes: \(content.hexString)")
+
+                    let zEvent = Z21Protocol.parseInbound(content)
+
+                    switch zEvent {
+                        case .cvResult(let cv0, let value):
+                            // convert 0-based cv -> 1-based for UI
+                            let cv1 = UInt8(cv0) + 1
+                            self?.eventsSubject.send(.cvReadResult(cv: cv1, value: value))
+                            if let cont = self?.waiters.removeValue(forKey: cv1) {
+                                cont.resume(returning: value)
+                            }
+                            // If writing CV desarm waiter
+                            if let w = self?.writeWaiters.removeValue(forKey: cv1) {
+                                w.resume(returning: true)
+                            }
+
+                        case .cvNack:
+                            self?.eventsSubject.send(.failure("CV read/write NACK"))
+
+                        case .unknown:
+                            break
+                    }
+
+
+                    self?.appendLog("  event: \(zEvent.description)")
+                }
+                self?.beginReceiveLoop()
+            }
+        }
+    }
+
+    private func handleState(_ state: NWConnection.State) {
+        switch state {
+            case .ready:
+                appendLog("UDP ready.")
+            case .failed(let err):
+                appendLog("Connection failed: \(err)")
+                disconnect()
+            case .waiting(let err):
+                appendLog("Connection waiting: \(err)")
+            case .cancelled:
+                appendLog("Connection cancelled.")
+            default:
+                break
+        }
+    }
 
     func appendLog(_ line: String) {
         let ts = ISO8601DateFormatter().string(from: Date())

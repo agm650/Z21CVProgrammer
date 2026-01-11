@@ -8,6 +8,11 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+enum CVImportFormat {
+    case csv
+    case json
+}
+
 enum CVExportFormat: String, CaseIterable, Identifiable {
     case csv = "CSV"
     case json = "JSON"

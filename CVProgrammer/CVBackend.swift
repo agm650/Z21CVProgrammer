@@ -2,8 +2,8 @@ import Foundation
 import Combine
 
 enum CVEvent: Equatable {
-    case cvReadResult(cv: UInt16, value: UInt8)
-    case cvWriteResult(cv: UInt16, value: UInt8)
+    case cvReadResult(cv: UInt8, value: UInt8)
+    case cvWriteResult(cv: UInt8, value: UInt8)
     case nack
     case failure(String)
     case info(String)

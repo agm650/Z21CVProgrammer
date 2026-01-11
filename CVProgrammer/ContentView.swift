@@ -67,6 +67,11 @@ struct ContentView: View {
     @State private var exportFormat: CVExportFormat = .csv
     @State private var exportDocument = CVExportDocument(data: Data())
     @State private var exportFilename = "cv_export.csv"
+    // import support
+    @State private var isImporting = false
+    @State private var importError: String?
+    // Bulk write
+    @State private var bulkWriteTask: Task<Void, Never>? = nil
 
     // autoscroll
     @AppStorage(PreferencesKeys.logAutoScroll) private var logAutoScroll: Bool = true
@@ -237,11 +242,27 @@ struct ContentView: View {
                             }
                             .pickerStyle(.menu)
                             .frame(width: 120)
+                            Button("Bulk Write Results") {
+                                startBulkWrite()
+                            }
+                            .disabled(!client.isRunning || cvResults.isEmpty || bulkWriteTask != nil || isBusy)
+
+                            Button("Stop Write") {
+                                bulkWriteTask?.cancel()
+                                bulkWriteTask = nil
+                            }
+                            .disabled(bulkWriteTask == nil)
 
                             Button("Export…") {
                                 prepareExport()
                             }
                             .disabled(cvResults.isEmpty)
+                            Button("Import…") {
+                                isImporting = true
+                                rangeTask?.cancel()
+                                rangeTask = nil
+                                nextRangeCV = nil
+                            }
 
                             Spacer()
 
@@ -325,6 +346,28 @@ struct ContentView: View {
                     type = saved
                 }
             }
+            .onReceive(client.cvEvents) { event in
+                switch event {
+                    case .cvReadResult(let cv, let value):
+                        if (1...maxCvValue).contains(cv) {
+                            cvResults[cv] = value
+                        }
+                        if cv == cvNumber1Based { cvValue = value }
+
+                    case .cvWriteResult(let cv, let value):
+                        if (1...maxCvValue).contains(cv) {
+                            cvResults[cv] = value
+                        }
+                        if cv == cvNumber1Based { cvValue = value }
+
+                    case .failure(let message):
+                        client.appendExternalLog("Error: \(message)")
+                    case .nack:
+                        client.appendExternalLog("NACK received")
+                    case .info(let msg):
+                        client.appendExternalLog("Info: \(msg)")
+                }
+            }
             .onChange(of: type) {
                 newType in preferredProtocolRaw = newType.rawValue
             }
@@ -338,6 +381,30 @@ struct ContentView: View {
                 if rangeTask != nil, busy == false {
                     advanceRangeAfterReadCompletion()
                 }
+            }
+            .fileImporter(
+                isPresented: $isImporting,
+                allowedContentTypes: [.commaSeparatedText, .json],
+                allowsMultipleSelection: false
+            ) { result in
+                switch result {
+                    case .success(let urls):
+                        guard let url = urls.first else { return }
+                        Task { @MainActor in
+                            importCVResults(from: url)
+                        }
+                    case .failure(let error):
+                        importError = error.localizedDescription
+                        client.appendExternalLog("Import failed: \(error.localizedDescription)")
+                }
+            }
+            .alert("Import Error", isPresented: Binding(
+                get: { importError != nil },
+                set: { _ in importError = nil }
+            )) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(importError ?? "")
             }
             .fileExporter(
                 isPresented: $isExporting,
@@ -364,14 +431,45 @@ struct ContentView: View {
 
     private func startReadRange() {
         rangeTask?.cancel()
-        rangeTask = Task { @MainActor in
-            nextRangeCV = 1
-            cvResults.removeAll()
+        cvResults.removeAll()
 
-            // Kick off the first read immediately
-            sendNextRangeReadIfPossible()
+        if type == .z21 {
+            rangeTask = Task { @MainActor in
+                for cv in 1...Int(maxCvValue) {
+                    if Task.isCancelled { break }
+
+                    var value: UInt8? = nil
+                    var attempts = 0
+
+                    while value == nil && attempts < 3 && !Task.isCancelled {
+                        value = await z21.readCVAsync(
+                            locoAddress: locoAddress,
+                            cv: UInt8(cv),
+                            timeoutMs: 1200
+                        )
+                        attempts += 1
+                    }
+
+                    if value == nil {
+                        client.appendExternalLog("CV \(cv) timed out after 3 attempts")
+                    }
+
+                    // Small pacing even after success
+                    try? await Task.sleep(nanoseconds: 40_000_000) // 40ms
+                }
+
+                rangeTask = nil
+            }
+        } else {
+            // DCC-EX path unchanged
+            rangeTask = Task { @MainActor in
+                nextRangeCV = 1
+                sendNextRangeReadIfPossible()
+            }
         }
     }
+
+
 
     @MainActor
     private func sendNextRangeReadIfPossible() {
@@ -451,6 +549,149 @@ struct ContentView: View {
     private var isCurrentReadOnly: Bool {
         currentMeta?.readOnly == true
     }
+
+    private func importCSV(_ data: Data) throws -> [UInt8: UInt8] {
+        guard let text = String(data: data, encoding: .utf8) else {
+            throw ImportError.invalidEncoding
+        }
+
+        var result: [UInt8: UInt8] = [:]
+
+        for rawLine in text.split(whereSeparator: \.isNewline) {
+            let line = rawLine.trimmingCharacters(in: .whitespacesAndNewlines)
+            if line.isEmpty { continue }
+
+            let parts = line.split(separator: ",", omittingEmptySubsequences: true)
+            guard parts.count >= 2 else { continue }
+
+            let a = parts[0].trimmingCharacters(in: .whitespacesAndNewlines)
+            let b = parts[1].trimmingCharacters(in: .whitespacesAndNewlines)
+
+            guard let cv = UInt8(a), let value = UInt8(b), cv >= 1 else { continue }
+            result[cv] = value
+        }
+
+        return result
+    }
+
+
+    private func importJSON(_ data: Data) throws -> [UInt8: UInt8] {
+        let decoded = try JSONDecoder().decode([String: UInt8].self, from: data)
+
+        var result: [UInt8: UInt8] = [:]
+        for (k, v) in decoded {
+            if let cv = UInt8(k), cv >= 1 {
+                result[cv] = v
+            }
+        }
+        return result
+    }
+
+    private func importCVResults(from url: URL) {
+        do {
+            let data = try Data(contentsOf: url)
+
+            let imported: [UInt8: UInt8]
+            switch url.pathExtension.lowercased() {
+                case "csv":
+                    imported = try importCSV(data)
+                case "json":
+                    imported = try importJSON(data)
+                default:
+                    throw ImportError.unsupportedFormat
+            }
+
+            // ✅ Replace mode + clamp to configured max CV
+            let filtered = imported.filter { (cv, _) in
+                cv >= 1 && cv <= maxCvValue
+            }
+
+            cvResults = filtered
+
+            // ✅ Keep selection/editor consistent
+            if let sel = selectedCV, cvResults[sel] == nil {
+                selectedCV = nil
+            }
+            if let v = cvResults[cvNumber1Based] {
+                cvValue = v
+            }
+
+            client.appendExternalLog("Imported \(filtered.count) CVs (replaced) from \(url.lastPathComponent)")
+
+        } catch {
+            importError = error.localizedDescription
+            client.appendExternalLog("Import failed: \(error.localizedDescription)")
+        }
+    }
+
+
+    enum ImportError: LocalizedError {
+        case invalidEncoding
+        case unsupportedFormat
+
+        var errorDescription: String? {
+            switch self {
+                case .invalidEncoding:
+                    return "File encoding is not UTF-8."
+                case .unsupportedFormat:
+                    return "Unsupported file format."
+            }
+        }
+    }
+
+    private func startBulkWrite() {
+        bulkWriteTask?.cancel()
+
+        let items = cvResults
+            .map { (cv: $0.key, value: $0.value) }
+            .sorted { $0.cv < $1.cv }
+
+        bulkWriteTask = Task { @MainActor in
+            client.appendExternalLog("Starting bulk write of \(items.count) CVs…")
+
+            for item in items {
+                if Task.isCancelled { break }
+
+                // Skip read-only CVs from metadata
+                if metaStore.meta(for: item.cv)?.readOnly == true {
+                    client.appendExternalLog("Skipping CV\(item.cv) (read-only)")
+                    continue
+                }
+
+                let ok: Bool
+
+                if type == .z21 {
+                    // Z21 needs a loco address for POM
+                    ok = await z21.writeCVAsync(
+                        locoAddress: locoAddress,
+                        cv: item.cv,
+                        value: item.value,
+                        timeoutMs: 1200
+                    )
+                } else {
+                    // DCC-EX uses programming track, no loco address
+                    ok = await dcc.writeCVAsync(
+                        cv: item.cv,
+                        value: item.value,
+                        timeoutMs: 3000
+                    )
+                }
+
+                if ok {
+                    client.appendExternalLog("Wrote CV\(item.cv)=\(item.value)")
+                } else {
+                    client.appendExternalLog("Write failed CV\(item.cv)=\(item.value)")
+                }
+
+                // pacing: protect command station/decoder
+                try? await Task.sleep(nanoseconds: 80_000_000) // 80ms
+            }
+
+            client.appendExternalLog("Bulk write finished.")
+            bulkWriteTask = nil
+        }
+    }
+
 }
 
 struct CVRow: Identifiable {
@@ -458,3 +699,4 @@ struct CVRow: Identifiable {
     let cv: UInt8
     let value: Int
 }
+

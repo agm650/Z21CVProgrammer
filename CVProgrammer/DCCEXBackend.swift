@@ -31,6 +31,8 @@ final class DCCEXBackend: ObservableObject, CVBackend {
     private var rxBuffer = Data()
     private let maxLogLines = 100
 
+    private var writeContinuation: CheckedContinuation<Bool, Never>? = nil
+
     func connect(host: String, port: UInt16) {
         disconnect()
         guard let p = NWEndpoint.Port(rawValue: port) else { return }
@@ -87,6 +89,27 @@ final class DCCEXBackend: ObservableObject, CVBackend {
         send("<W \(cv) \(value) \(id) \(sub)>", note: "WRITE CV \(cv)=\(value)")
         startTimeout()
     }
+
+    func writeCVAsync(cv: UInt8, value: UInt8, timeoutMs: Int = 3000) async -> Bool {
+        // only one operation at a time
+        guard pending == nil else { return false }
+
+        return await withCheckedContinuation { cont in
+            Task { @MainActor [weak self] in
+                guard let self else { cont.resume(returning: false); return }
+                self.writeContinuation = cont
+                self.writeCV(locoAddress: nil, cv: cv, value: value)
+                // startTimeout() already runs and will clear busy; we should also resume cont on timeout:
+                self.startTimeoutAsyncBridge()
+            }
+        }
+    }
+
+    private func startTimeoutAsyncBridge() {
+        // If you already call startTimeout() in writeCV(), you can just ensure it resumes cont on timeout.
+        // Easiest: modify startTimeout() to resume writeContinuation = false when it fires.
+    }
+
 
     func appendLog(_ line: String) {
         let ts = ISO8601DateFormatter().string(from: Date())
@@ -197,6 +220,9 @@ final class DCCEXBackend: ObservableObject, CVBackend {
             pending = nil
             progTrackBusy = false
         }
+
+        self.writeContinuation?.resume(returning: false)
+        self.writeContinuation = nil
     }
 
     private func handleReadResponse(_ parts: [String]) {
@@ -228,28 +254,33 @@ final class DCCEXBackend: ObservableObject, CVBackend {
 
         if valInt < 0 {
             eventsSubject.send(.failure("Write CV\(cv) failed"))
+            writeContinuation?.resume(returning: false)
+            writeContinuation = nil
             return
         }
         eventsSubject.send(.cvWriteResult(cv: cv, value: UInt8(clamping: valInt)))
+        writeContinuation?.resume(returning: true)
+        writeContinuation = nil
+
     }
 
     /// Parses either:
     /// - "29"                 => (nil, nil, 29)
     /// - "123|1|29"           => (123, 1, 29)
-    private func parseTokenOrCV(_ field: String) -> (Int?, Int?, UInt16?) {
+    private func parseTokenOrCV(_ field: String) -> (Int?, Int?, UInt8?) {
         if field.contains("|") {
             let comps = field.split(separator: "|").map(String.init)
             guard comps.count >= 3 else { return (nil, nil, nil) }
             let id = Int(comps[0])
             let sub = Int(comps[1])
-            let cv = UInt16(comps[2])
+            let cv = UInt8(comps[2])
             return (id, sub, cv)
         } else {
-            return (nil, nil, UInt16(field))
+            return (nil, nil, UInt8(field))
         }
     }
 
-    private func finishIfMatchesPending(tokenId: Int?, tokenSub: Int?, cv: UInt16) {
+    private func finishIfMatchesPending(tokenId: Int?, tokenSub: Int?, cv: UInt8) {
         guard let pending else { return }
 
         // If the response carries a token, require it to match.
