@@ -1,13 +1,13 @@
 //
-//  Z21CVProgrammerUITestsLaunchTests.swift
-//  Z21CVProgrammerUITests
+//  CVProgrammerUITestsLaunchTests.swift
+//  CVProgrammerUITests
 //
 //  Created by Luc Dandoy on 22/12/2025.
 //
 
 import XCTest
 
-final class Z21CVProgrammerUITestsLaunchTests: XCTestCase {
+final class CVProgrammerUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

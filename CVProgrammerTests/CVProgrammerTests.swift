@@ -1,14 +1,14 @@
 //
-//  Z21CVProgrammerTests.swift
-//  Z21CVProgrammerTests
+//  CVProgrammerTests.swift
+//  CVProgrammerTests
 //
 //  Created by Luc Dandoy on 22/12/2025.
 //
 
 import XCTest
-@testable import Z21CVProgrammer
+@testable import CVProgrammer
 
-final class Z21CVProgrammerTests: XCTestCase {
+final class CVProgrammerTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

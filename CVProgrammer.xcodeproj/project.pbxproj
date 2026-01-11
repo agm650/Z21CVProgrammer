@@ -99,7 +99,7 @@
 			children = (
 				C7A03EBC2EF8B87900D82C66 /* CVProgrammer */,
 				C7A03ECE2EF8B88000D82C66 /* CVProgrammerTests */,
-				C7A03ED82EF8B88000D82C66 /* Z21CVProgrammerUITests */,
+				C7A03ED82EF8B88000D82C66 /* CVProgrammerUITests */,
 				C7A03EBB2EF8B87900D82C66 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -153,13 +153,13 @@
 			path = CVProgrammerTests;
 			sourceTree = "<group>";
 		};
-		C7A03ED82EF8B88000D82C66 /* Z21CVProgrammerUITests */ = {
+		C7A03ED82EF8B88000D82C66 /* CVProgrammerUITests */ = {
 			isa = PBXGroup;
 			children = (
 				C7A03ED92EF8B88000D82C66 /* CVProgrammerUITests.swift */,
 				C7A03EDB2EF8B88000D82C66 /* CVProgrammerUITestsLaunchTests.swift */,
 			);
-			path = Z21CVProgrammerUITests;
+			path = CVProgrammerUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -475,7 +475,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammer";
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.CVProgrammer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -503,7 +503,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammer";
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.CVProgrammer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -521,7 +521,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammerTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.CVProgrammerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -540,7 +540,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammerTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.CVProgrammerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -557,7 +557,7 @@
 				DEVELOPMENT_TEAM = 3YCBWTYW6P;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammerUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.CVProgrammerUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -574,7 +574,7 @@
 				DEVELOPMENT_TEAM = 3YCBWTYW6P;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.Z21CVProgrammerUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "Luc-Dandoy.CVProgrammerUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;

@@ -1,13 +1,13 @@
 //
-//  Z21CVProgrammerUITests.swift
-//  Z21CVProgrammerUITests
+//  CVProgrammerUITests.swift
+//  CVProgrammerUITests
 //
 //  Created by Luc Dandoy on 22/12/2025.
 //
 
 import XCTest
 
-final class Z21CVProgrammerUITests: XCTestCase {
+final class CVProgrammerUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

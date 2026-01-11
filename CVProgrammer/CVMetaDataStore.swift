@@ -1,6 +1,6 @@
 //
 //  CVMetaDataStore.swift
-//  Z21CVProgrammer
+//  CVProgrammer
 //
 //  Created by Luc Dandoy on 22/12/2025.
 //
