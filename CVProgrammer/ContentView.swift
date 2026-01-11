@@ -68,6 +68,9 @@ struct ContentView: View {
     @State private var exportDocument = CVExportDocument(data: Data())
     @State private var exportFilename = "cv_export.csv"
 
+    // autoscroll
+    @AppStorage(PreferencesKeys.logAutoScroll) private var logAutoScroll: Bool = true
+
     private var client: any CVBackend { type == .z21 ? z21 : dcc }
 
     // DCC EX busy indicator
@@ -298,6 +301,7 @@ struct ContentView: View {
                             }
                             .frame(minHeight: 160)
                             .onChange(of: client.logText) { _ in
+                                guard logAutoScroll else { return }
                                 // Auto-scroll to bottom whenever new log arrives
                                 withAnimation(nil) {
                                     proxy.scrollTo("LOG_BOTTOM", anchor: .bottom)
