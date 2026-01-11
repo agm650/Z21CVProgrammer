@@ -21,5 +21,8 @@ struct Z21CVProgrammerApp: App {
                 }
         }
         .windowStyle(.titleBar)
+        Settings {
+            SettingsView()
+        }
     }
 }

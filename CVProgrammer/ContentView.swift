@@ -8,35 +8,56 @@
 import SwiftUI
 
 enum CommandStationType: String, CaseIterable, Identifiable {
-    case z21 = "Roco z21"
-    case dccEx = "DCC-EX"
+    case z21 = "z21"
+    case dccEx = "dccEx"
     var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+            case .z21: return "Roco z21"
+            case .dccEx: return "DCC-EX"
+        }
+    }
 }
 
 struct ContentView: View {
     @EnvironmentObject var meta: CVMetadataStore
     @StateObject var z21 = Z21Client()
     @StateObject var dcc = DCCEXBackend()
+    @AppStorage(PreferencesKeys.preferredProtocol)
+    private var preferredProtocolRaw: String = CommandStationType.z21.rawValue
     @State private var type: CommandStationType = .z21
 
-    @State private var host: String = "192.168.0.111"
-    @State private var port: UInt16 = 21105
+    @AppStorage(PreferencesKeys.remoteIP) private var remoteIPStored: String = "192.168.0.111"
+    private var host: String {
+        remoteIPStored
+    }
+    @AppStorage(PreferencesKeys.remotePort) private var remotePortStored: Int = 21105
+    private var port: UInt16 {
+        UInt16(Swift.max(1, Swift.min(65535, remotePortStored)))
+    }
 
     @State private var locoAddress: UInt16 = 3
-    @State private var cvNumber1Based: UInt16 = 1
+    @State private var cvNumber1Based: UInt8 = 1
     @State private var cvValue: UInt8 = 3
-    @State private var maxCvValue: UInt8 = 106
+    // Max CV to parse
+    @AppStorage(PreferencesKeys.maxCvValue) private var maxCvValueStored: Int = 255
+    private var maxCvValue: UInt8 {
+        UInt8(Swift.max(1, Swift.min(Int(UInt8.max), maxCvValueStored)))
+    }
+
+
     // for DCCEX Busy mode
-    @State private var nextRangeCV: UInt16? = nil
+    @State private var nextRangeCV: UInt8? = nil
 
     // CV results stored by CV number (1-based for display)
-    @State private var cvResults: [UInt16: UInt8] = [:]
+    @State private var cvResults: [UInt8: UInt8] = [:]
 
     // Range read task
     @State private var rangeTask: Task<Void, Never>?
 
     // Load CV value
-    @State private var selectedCV: UInt16? = nil
+    @State private var selectedCV: UInt8? = nil
 
     // Metadata
     @EnvironmentObject private var metaStore: CVMetadataStore
@@ -61,15 +82,16 @@ struct ContentView: View {
                     .font(.title2)
                     .bold()
                 Picker("Protocol", selection: $type) {
-                    ForEach(CommandStationType.allCases) { Text($0.rawValue).tag($0) }
+                    ForEach(CommandStationType.allCases) { t in
+                        Text(t.displayName).tag(t) }
                 }
                 GroupBox("Connection") {
                     HStack {
-                        TextField("IP / Host", text: $host)
+                        TextField("IP / Host", text: $remoteIPStored)
                             .textFieldStyle(.roundedBorder)
                             .frame(minWidth: 220)
 
-                        TextField("Port", value: $port, format: .number)
+                        TextField("Port", value: $remotePortStored, format: .number)
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 90)
 
@@ -107,12 +129,11 @@ struct ContentView: View {
                                     .font(.footnote)
                                     .foregroundStyle(.secondary)
                             }
+                        } else if type == .z21 {
+                            Text("Note: POM read needs RailCom enabled in the Z21 and in the decoder.")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
                         }
-
-                        Text("Note: POM read needs RailCom enabled in the Z21 and in the decoder.")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-
                         HStack {
                             VStack(alignment: .leading) {
                                 Text("Locomotive Address")
@@ -134,7 +155,7 @@ struct ContentView: View {
                                     .onChange(of: cvNumber1Based) {
                                         v in
                                         if v < 1 { cvNumber1Based = 1 }
-                                        if v > maxCvValue { cvNumber1Based = UInt16(maxCvValue) }
+                                        if v > maxCvValue { cvNumber1Based = maxCvValue }
                                     }
                                     .onChange(of: cvValue) { v in
                                         // UInt8 is already 0..255, so no clamp needed unless you use Int input.
@@ -295,23 +316,18 @@ struct ContentView: View {
             }
             .padding(16)
             .frame(minWidth: 820, minHeight: 620)
-//            .onReceive(client.events) { event in
-//                switch event {
-//                    case .cvResult(let cv0, let value):
-//                        let cv1 = cv0 &+ 1
-//                        if (1...UInt16(maxCvValue)).contains(cv1) {
-//                            cvResults[cv1] = value
-//                        }
-//                        // If the user is currently viewing this CV, update the editor + bit view
-//                        if cv1 == cvNumber1Based {
-//                            cvValue = value
-//                        }
-//                    case .cvNack:
-//                        break
-//                    case .unknown:
-//                        break
-//                }
-//            }
+            .onAppear {
+                if let saved = CommandStationType(rawValue: preferredProtocolRaw) {
+                    type = saved
+                }
+            }
+            .onChange(of: type) {
+                newType in preferredProtocolRaw = newType.rawValue
+            }
+            .onChange(of: preferredProtocolRaw) { raw in
+                guard let saved = CommandStationType(rawValue: raw) else { return }
+                type = saved
+            }
             .onChange(of: dcc.progTrackBusy) { busy in
                 // When an operation completes, busy becomes false → send next CV
                 guard type == .dccEx else { return }
@@ -357,7 +373,7 @@ struct ContentView: View {
     private func sendNextRangeReadIfPossible() {
         guard rangeTask != nil else { return }
         guard let cv = nextRangeCV else { return }
-        guard cv >= 1 && cv <= UInt16(maxCvValue) else {
+        guard cv >= 1 && cv <= maxCvValue else {
             // Done
             rangeTask = nil
             nextRangeCV = nil
@@ -434,7 +450,7 @@ struct ContentView: View {
 }
 
 struct CVRow: Identifiable {
-    var id: UInt16 { cv }
-    let cv: UInt16
+    var id: UInt8 { cv }
+    let cv: UInt8
     let value: Int
 }

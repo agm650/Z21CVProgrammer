@@ -18,8 +18,8 @@ protocol CVBackend: ObservableObject {
     func connect(host: String, port: UInt16)
     func disconnect()
 
-    func readCV(locoAddress: UInt16?, cv: UInt16)
-    func writeCV(locoAddress: UInt16?, cv: UInt16, value: UInt8)
+    func readCV(locoAddress: UInt16?, cv: UInt8)
+    func writeCV(locoAddress: UInt16?, cv: UInt8, value: UInt8)
 
     func clearLog()
     func appendLog(_ line: String)

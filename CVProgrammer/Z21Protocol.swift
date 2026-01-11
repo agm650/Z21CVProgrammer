@@ -11,7 +11,7 @@ enum Z21Protocol {
     // MARK: - POM write byte (same as before, but keep it)
 
     /// LAN_X_CV_POM_WRITE_BYTE (no reply). :contentReference[oaicite:5]{index=5}
-    static func makePOMWriteBytePacket(locoAddress: UInt16, cvAddress0Based: UInt16, value: UInt8) -> Data {
+    static func makePOMWriteBytePacket(locoAddress: UInt16, cvAddress0Based: UInt8, value: UInt8) -> Data {
         let (adrMSB, adrLSB) = splitLocoAddressForXBus(locoAddress)
 
         let cvMSB = UInt8((cvAddress0Based >> 8) & 0xFF)
@@ -40,7 +40,7 @@ enum Z21Protocol {
     // MARK: - POM read byte (new)
 
     /// LAN_X_CV_POM_READ_BYTE (reply: CV_NACK or CV_RESULT). :contentReference[oaicite:8]{index=8}
-    static func makePOMReadBytePacket(locoAddress: UInt16, cvAddress0Based: UInt16) -> Data {
+    static func makePOMReadBytePacket(locoAddress: UInt16, cvAddress0Based: UInt8) -> Data {
         let (adrMSB, adrLSB) = splitLocoAddressForXBus(locoAddress)
 
         let cvMSB = UInt8((cvAddress0Based >> 8) & 0xFF)
@@ -95,7 +95,7 @@ enum Z21Protocol {
             let cvLSB = UInt16(b[7])
             let cv0 = (cvMSB << 8) | cvLSB
             let value = b[8]
-            return .cvResult(cvAddress0Based: cv0, value: value)
+            return .cvResult(cvAddress0Based: UInt8(cv0), value: value)
         }
 
         return .unknown

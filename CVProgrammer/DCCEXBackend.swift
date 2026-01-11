@@ -17,7 +17,7 @@ final class DCCEXBackend: ObservableObject, CVBackend {
         let sub: Int          // callbacksub
         let startedAt: Date
         let kind: Kind
-        let cv: UInt16
+        let cv: UInt8
         enum Kind { case read, write }
     }
 
@@ -60,7 +60,7 @@ final class DCCEXBackend: ObservableObject, CVBackend {
     func clearLog() { logText = "" }
 
     
-    func readCV(locoAddress: UInt16?, cv: UInt16) {
+    func readCV(locoAddress: UInt16?, cv: UInt8) {
         guard pending == nil else {
             eventsSubject.send(.failure("Programming track busy"))
             return
@@ -74,7 +74,7 @@ final class DCCEXBackend: ObservableObject, CVBackend {
         startTimeout()
     }
 
-    func writeCV(locoAddress: UInt16?, cv: UInt16, value: UInt8) {
+    func writeCV(locoAddress: UInt16?, cv: UInt8, value: UInt8) {
         guard pending == nil else {
             eventsSubject.send(.failure("Programming track busy"))
             return

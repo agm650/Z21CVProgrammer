@@ -10,8 +10,8 @@ import Foundation
 // MARK: - Public model used by UI
 
 struct CVMeta: Identifiable, Hashable {
-    var id: UInt16 { number }
-    let number: UInt16              // 1-based
+    var id: UInt8 { number }
+    let number: UInt8              // 1-based
     let name: String
     let description: String
     let bitLabels: [Int: String]    // bit 0 is LSB
@@ -25,7 +25,7 @@ private struct CVMetadataFile: Decodable {
 }
 
 private struct CVMetaDTO: Decodable {
-    let number: UInt16
+    let number: UInt8
     let name: String
     let description: String
     let bitLabels: [String: String]?
@@ -52,7 +52,7 @@ private struct CVMetaDTO: Decodable {
 
 @MainActor
 final class CVMetadataStore: ObservableObject {
-    @Published private(set) var byNumber: [UInt16: CVMeta] = [:]
+    @Published private(set) var byNumber: [UInt8: CVMeta] = [:]
     @Published private(set) var loadError: String? = nil
 
     /// Call once at app start (or lazily).
@@ -65,7 +65,7 @@ final class CVMetadataStore: ObservableObject {
             let data = try Data(contentsOf: url)
             let decoded = try JSONDecoder().decode(CVMetadataFile.self, from: data)
 
-            var dict: [UInt16: CVMeta] = [:]
+            var dict: [UInt8: CVMeta] = [:]
             for dto in decoded.cvs {
                 dict[dto.number] = dto.toModel()
             }
@@ -78,7 +78,7 @@ final class CVMetadataStore: ObservableObject {
         }
     }
 
-    func meta(for cv: UInt16) -> CVMeta? {
+    func meta(for cv: UInt8) -> CVMeta? {
         byNumber[cv]
     }
 }

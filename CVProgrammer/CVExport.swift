@@ -31,7 +31,7 @@ enum CVExportFormat: String, CaseIterable, Identifiable {
 // Simple payload for JSON export
 struct CVExportJSON: Codable {
     struct Item: Codable {
-        let cv: UInt16      // 1-based
+        let cv: UInt8      // 1-based
         let value: UInt8
         let name: String?
         let description: String?
@@ -73,7 +73,7 @@ func cvBinaryString(_ v: UInt8) -> String {
 @MainActor
 func makeCSVExport(
     locoAddress: UInt16,
-    cvResults: [UInt16: UInt8],
+    cvResults: [UInt8: UInt8],
     metaStore: CVMetadataStore
 ) -> Data {
     // Header row
@@ -109,7 +109,7 @@ func makeCSVExport(
 @MainActor
 func makeJSONExport(
     locoAddress: UInt16,
-    cvResults: [UInt16: UInt8],
+    cvResults: [UInt8: UInt8],
     metaStore: CVMetadataStore
 ) -> Data {
     let sorted = cvResults.keys.sorted()

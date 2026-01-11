@@ -23,6 +23,8 @@
 		C7A837052F12E149000B8C90 /* CommandStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A837042F12E149000B8C90 /* CommandStation.swift */; };
 		C7A8370A2F12EFF0000B8C90 /* CVBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A837082F12EFF0000B8C90 /* CVBackend.swift */; };
 		C7A8370B2F12EFF0000B8C90 /* DCCEXBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A837092F12EFF0000B8C90 /* DCCEXBackend.swift */; };
+		C7A8370D2F13D6CA000B8C90 /* PreferencesKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A8370C2F13D6CA000B8C90 /* PreferencesKeys.swift */; };
+		C7A8370F2F13D6E8000B8C90 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A8370E2F13D6E8000B8C90 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		C7A837042F12E149000B8C90 /* CommandStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandStation.swift; sourceTree = "<group>"; };
 		C7A837082F12EFF0000B8C90 /* CVBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVBackend.swift; sourceTree = "<group>"; };
 		C7A837092F12EFF0000B8C90 /* DCCEXBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DCCEXBackend.swift; sourceTree = "<group>"; };
+		C7A8370C2F13D6CA000B8C90 /* PreferencesKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesKeys.swift; sourceTree = "<group>"; };
+		C7A8370E2F13D6E8000B8C90 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,8 @@
 				C7A837092F12EFF0000B8C90 /* DCCEXBackend.swift */,
 				C7A03EBD2EF8B87900D82C66 /* CVProgrammerApp.swift */,
 				C7A03EBF2EF8B87900D82C66 /* ContentView.swift */,
+				C7A8370C2F13D6CA000B8C90 /* PreferencesKeys.swift */,
+				C7A8370E2F13D6E8000B8C90 /* SettingsView.swift */,
 				C7A03EF02EF8C02400D82C66 /* cv_metadata.json */,
 				C7A03EF42EF8C64B00D82C66 /* CVExport.swift */,
 				C7A03EF22EF8C05100D82C66 /* CVMetaDataStore.swift */,
@@ -288,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7A8370B2F12EFF0000B8C90 /* DCCEXBackend.swift in Sources */,
+				C7A8370D2F13D6CA000B8C90 /* PreferencesKeys.swift in Sources */,
 				C7A837052F12E149000B8C90 /* CommandStation.swift in Sources */,
 				C7A03EC02EF8B87900D82C66 /* ContentView.swift in Sources */,
 				C7A03EBE2EF8B87900D82C66 /* CVProgrammerApp.swift in Sources */,
@@ -295,6 +302,7 @@
 				C7A03EF32EF8C05100D82C66 /* CVMetaDataStore.swift in Sources */,
 				C7A8370A2F12EFF0000B8C90 /* CVBackend.swift in Sources */,
 				C7A03EEF2EF8BDB900D82C66 /* BitEditorView.swift in Sources */,
+				C7A8370F2F13D6E8000B8C90 /* SettingsView.swift in Sources */,
 				C7A03EE92EF8B97E00D82C66 /* Z21Client.swift in Sources */,
 				C7A03EEB2EF8B99E00D82C66 /* Z21Protocol.swift in Sources */,
 			);

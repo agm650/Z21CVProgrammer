@@ -61,13 +61,13 @@ final class Z21Client: ObservableObject, CVBackend {
         logText = ""
     }
 
-    func readCV(locoAddress: UInt16?, cv: UInt16) {
+    func readCV(locoAddress: UInt16?, cv: UInt8) {
         guard let locoAddress else { return }
         let pkt = Z21Protocol.makePOMReadBytePacket(locoAddress: locoAddress, cvAddress0Based: cv - 1)
         send(pkt)
     }
 
-    func writeCV(locoAddress: UInt16?, cv: UInt16, value: UInt8) {
+    func writeCV(locoAddress: UInt16?, cv: UInt8, value: UInt8) {
         guard let locoAddress else { return }
         let pkt = Z21Protocol.makePOMWriteBytePacket(locoAddress: locoAddress, cvAddress0Based: cv - 1, value: value)
         send(pkt)
@@ -152,7 +152,7 @@ private extension Data {
 }
 
 enum Z21Event: Equatable {
-    case cvResult(cvAddress0Based: UInt16, value: UInt8)
+    case cvResult(cvAddress0Based: UInt8, value: UInt8)
     case cvNack
     case unknown
 
