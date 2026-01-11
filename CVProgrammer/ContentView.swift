@@ -26,6 +26,8 @@ struct ContentView: View {
     @State private var cvNumber1Based: UInt16 = 1
     @State private var cvValue: UInt8 = 3
     @State private var maxCvValue: UInt8 = 106
+    // for DCCEX Busy mode
+    @State private var nextRangeCV: UInt16? = nil
 
     // CV results stored by CV number (1-based for display)
     @State private var cvResults: [UInt16: UInt8] = [:]
@@ -46,6 +48,11 @@ struct ContentView: View {
     @State private var exportFilename = "cv_export.csv"
 
     private var client: any CVBackend { type == .z21 ? z21 : dcc }
+
+    // DCC EX busy indicator
+    private var isBusy: Bool {
+        type == .dccEx && dcc.progTrackBusy
+    }
 
     var body: some View {
         ScrollView {
@@ -84,10 +91,23 @@ struct ContentView: View {
                     }
                 }
 
-                GroupBox("POM (Programming on the Main)") {
+                GroupBox(type == .z21 ? "POM (Programming on the Main)" : "Programming Track (Service Mode)") {
                     VStack(alignment: .leading, spacing: 10) {
 
                         metadataErrorView
+
+                        // DCC-EX programming track busy indicator
+                        if type == .dccEx {
+                            HStack(spacing: 8) {
+                                Circle()
+                                    .fill(dcc.progTrackBusy ? .orange : .green)
+                                    .frame(width: 10, height: 10)
+
+                                Text(dcc.progTrackBusy ? "Programming track busy…" : "Programming track ready")
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
 
                         Text("Note: POM read needs RailCom enabled in the Z21 and in the decoder.")
                             .font(.footnote)
@@ -134,13 +154,13 @@ struct ContentView: View {
                             Spacer()
 
                             Button("Write CV") { client.writeCV(locoAddress: type == .z21 ? locoAddress : nil, cv: cvNumber1Based, value: cvValue) }
-                                .disabled(!client.isRunning || isCurrentReadOnly)
+                                .disabled(!client.isRunning || isCurrentReadOnly || isBusy )
 
                             Button("Read CV") {
                                 // readCV(single: cvNumber1Based)
                                 client.readCV(
                                     locoAddress: type == .z21 ? locoAddress : nil, cv: cvNumber1Based)
-                            }.disabled(!client.isRunning)
+                            }.disabled(!client.isRunning || isBusy )
                         }
 
                         if let meta = currentMeta {
@@ -178,6 +198,7 @@ struct ContentView: View {
                             Button("Stop") {
                                 rangeTask?.cancel()
                                 rangeTask = nil
+                                nextRangeCV = nil
                             }
                             .disabled(rangeTask == nil)
 
@@ -291,6 +312,13 @@ struct ContentView: View {
 //                        break
 //                }
 //            }
+            .onChange(of: dcc.progTrackBusy) { busy in
+                // When an operation completes, busy becomes false → send next CV
+                guard type == .dccEx else { return }
+                if rangeTask != nil, busy == false {
+                    advanceRangeAfterReadCompletion()
+                }
+            }
             .fileExporter(
                 isPresented: $isExporting,
                 document: exportDocument,
@@ -316,21 +344,47 @@ struct ContentView: View {
 
     private func startReadRange() {
         rangeTask?.cancel()
+        rangeTask = Task { @MainActor in
+            nextRangeCV = 1
+            cvResults.removeAll()
 
-        rangeTask = Task {
-            for cv in 1...maxCvValue {
-                if Task.isCancelled { break }
-                // client.readCV(locoAddress: type == .z21 ? locoAddress : nil, cv: cvNumber1Based)
-                client.readCV(locoAddress: type == .z21 ? locoAddress : nil, cv: UInt16(cv))
-
-                // Small pacing to avoid flooding the command station.
-                // Tweak as needed depending on your z21/decoder responsiveness.
-                try? await Task.sleep(nanoseconds: 80_000_000) // 80ms
-            }
-
-            await MainActor.run { rangeTask = nil }
+            // Kick off the first read immediately
+            sendNextRangeReadIfPossible()
         }
     }
+
+    @MainActor
+    private func sendNextRangeReadIfPossible() {
+        guard rangeTask != nil else { return }
+        guard let cv = nextRangeCV else { return }
+        guard cv >= 1 && cv <= UInt16(maxCvValue) else {
+            // Done
+            rangeTask = nil
+            nextRangeCV = nil
+            return
+        }
+
+        // In DCC-EX mode, only send when not busy
+        if type == .dccEx && isBusy {
+            return
+        }
+
+        client.readCV(
+            locoAddress: type == .z21 ? locoAddress : nil,
+            cv: cv
+        )
+    }
+
+    @MainActor
+    private func advanceRangeAfterReadCompletion() {
+        guard rangeTask != nil else { return }
+        guard let cv = nextRangeCV else { return }
+
+        let next = cv + 1
+        nextRangeCV = next
+        sendNextRangeReadIfPossible()
+    }
+
 
     private var currentMeta: CVMeta? {
        return   metaStore.meta(for: cvNumber1Based)
